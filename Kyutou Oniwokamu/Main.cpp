@@ -1,9 +1,10 @@
-#include <iostream>
-using namespace std;
+#include "Game.h"
 
 int main()
 {
-	cout << "‚æ‚¤‚±‚»" << "C++‚ÖI" << '\n';
-
+	Game game;
+	game.Startup();
+	game.Playing();
+	game.Shutdown();
 	return 0;
 }
