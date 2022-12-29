@@ -1,8 +1,10 @@
 #include "Game.h"
 
 Game::Game()
+	: cmd("")
+	, loop(true)
+	, win(false)
 {
-	winner = true;
 }
 
 void Game::Startup()
@@ -16,15 +18,35 @@ void Game::Startup()
 
 void Game::Playing()
 {
+	Setting();
+
+	while (loop)
+	{
+		PeachTurn();
+		DemonTurn();
+	}
+}
+
+void Game::Setting()
+{
+}
+
+void Game::PeachTurn()
+{
 	cout << "“‚Í‰½‚ð‚µ‚Ü‚·‚©H" << endl;
 	cout << "UŒ‚Fa@“ÅUŒ‚Fs@–hŒäFd@‰ñ•œFf" << endl;
 	while (Input(2));
 	cout << endl;
 }
 
+void Game::DemonTurn()
+{
+	loop = false;
+}
+
 void Game::Shutdown()
 {
-	if (winner)
+	if (win)
 	{
 		cout << "‹S‚Ì‘Ì—Í‚ªƒ[ƒ‚É‚È‚Á‚½B" << endl;
 		cout << "“‚ÌŸ—˜!!!" << endl;
@@ -44,7 +66,6 @@ void Game::Shutdown()
 
 bool Game::Input(int p)
 {
-	string cmd;
 	cin >> cmd;
 	switch (p)
 	{

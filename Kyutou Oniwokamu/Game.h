@@ -10,7 +10,12 @@ public:
 	void Playing();
 	void Shutdown();
 private:
+	void Setting();
+	void PeachTurn();
+	void DemonTurn();
 	bool Input(int p);
 
-	bool winner;
+	string cmd;
+	bool loop;
+	bool win;
 };
