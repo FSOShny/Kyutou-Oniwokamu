@@ -2,8 +2,8 @@
 
 Game::Game()
 	: cmd("")
-	, loop(true)
 	, win(false)
+	, lose(false)
 {
 }
 
@@ -20,7 +20,7 @@ void Game::Playing()
 {
 	Setting();
 
-	while (loop)
+	while (!(win || lose))
 	{
 		PeachTurn();
 		DemonTurn();
@@ -41,7 +41,6 @@ void Game::PeachTurn()
 
 void Game::DemonTurn()
 {
-	loop = false;
 }
 
 void Game::Shutdown()

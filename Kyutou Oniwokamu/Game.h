@@ -16,6 +16,6 @@ private:
 	bool Input(int p);
 
 	string cmd;
-	bool loop;
 	bool win;
+	bool lose;
 };
