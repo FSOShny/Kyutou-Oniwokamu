@@ -4,7 +4,8 @@ class Character
 {
 public:
 	Character();
-private:
+protected:
 	int hp;
 	int ap;
+	unsigned int state;
 };

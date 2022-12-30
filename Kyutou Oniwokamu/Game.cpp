@@ -4,6 +4,7 @@ Game::Game()
 	: cmd("")
 	, win(false)
 	, lose(false)
+	, turn(0)
 {
 }
 
@@ -13,22 +14,30 @@ void Game::Startup()
 	cout << "弱：a　中：s　強：d" << endl;
 	while (Input(0));
 	cout << endl;
+	peach.Setter(500, 50);
+	if (cmd == "a")
+	{
+		demon.Setter(300, 30);
+	}
+	else if (cmd == "s")
+	{
+		demon.Setter(600, 60);
+	}
+	else
+	{
+		demon.Setter(999, 99);
+	}
 	cout << "鬼が現れた！" << "\n\n";
 }
 
 void Game::Playing()
 {
-	Setting();
-
 	while (!(win || lose))
 	{
+		turn++;
 		PeachTurn();
 		DemonTurn();
 	}
-}
-
-void Game::Setting()
-{
 }
 
 void Game::PeachTurn()
@@ -37,10 +46,44 @@ void Game::PeachTurn()
 	cout << "攻撃：a　毒攻撃：s　防御：d　回復：f" << endl;
 	while (Input(2));
 	cout << endl;
+	if (cmd == "a")
+	{
+		peach.Attack(demon);
+	}
+	else if (cmd == "s")
+	{
+		peach.PoisonAtk(demon);
+	}
+	else if (cmd == "d")
+	{
+		peach.Defend();
+	}
+	else
+	{
+		peach.Recover();
+	}
+	lose = peach.StateCheck();
 }
 
 void Game::DemonTurn()
 {
+	if (lose)
+	{
+		return;
+	}
+	else if (turn % 4 < 2)
+	{
+		demon.Attack(peach);
+	}
+	else if (turn % 4 == 2)
+	{
+		demon.HeavyAtk(peach);
+	}
+	else
+	{
+		demon.Provoke();
+	}
+	win = demon.StateCheck();
 }
 
 void Game::Shutdown()

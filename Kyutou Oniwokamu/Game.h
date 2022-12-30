@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "Peach.h"
+#include "Demon.h"
 using namespace std;
 
 class Game
@@ -10,7 +12,6 @@ public:
 	void Playing();
 	void Shutdown();
 private:
-	void Setting();
 	void PeachTurn();
 	void DemonTurn();
 	bool Input(int p);
@@ -18,4 +19,7 @@ private:
 	string cmd;
 	bool win;
 	bool lose;
+	int turn;
+	Peach peach;
+	Demon demon;
 };

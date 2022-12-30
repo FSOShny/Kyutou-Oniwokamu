@@ -1,7 +1,8 @@
 #include "Character.h"
 
 Character::Character()
-	: hp(500)
-	, ap(50)
+	: hp(0)
+	, ap(0)
+	, state(0)
 {
 }
