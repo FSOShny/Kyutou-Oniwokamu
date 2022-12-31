@@ -6,12 +6,23 @@ class Demon : public Character
 {
 public:
 	void Setter(int hp, int ap);
-	void Attack(Peach& peach);
-	void HeavyAtk(Peach& peach);
-	void Provoke();
-	bool StateCheck();
+	bool IsDefend();
+	bool IsAngered();
+
+	int Attack(Peach& peach);
+	int HeavyAtk(Peach& peach);
+	void Defend();
+	bool CheckDead();
+	bool CheckAngered();
+	bool RemoveDefend();
+	bool RemovePoisoned();
+
+	void Damaged(int point);
+	void Poisoned();
 private:
-	const unsigned int isDeath = (1 << 0);
-	const unsigned int isFurious = (1 << 1);
+	int turnPois;
+	const unsigned int isDead = (1 << 0);
+	const unsigned int isDefend = (1 << 1);
 	const unsigned int isPoisoned = (1 << 2);
+	const unsigned int isAngered = (1 << 3);
 };

@@ -15,6 +15,7 @@ void Game::Startup()
 	while (Input(0));
 	cout << endl;
 	peach.Setter(500, 50);
+
 	if (cmd == "a")
 	{
 		demon.Setter(300, 30);
@@ -27,7 +28,8 @@ void Game::Startup()
 	{
 		demon.Setter(999, 99);
 	}
-	cout << "鬼が現れた！" << "\n\n";
+
+	cout << "鬼が現れた！！" << "\n\n";
 }
 
 void Game::Playing()
@@ -42,48 +44,87 @@ void Game::Playing()
 
 void Game::PeachTurn()
 {
+	if (peach.RemoveDefend())
+	{
+		cout << "（桃の防御が解除された。）" << '\n\n';
+	}
+
 	cout << "桃は何をしますか？" << endl;
 	cout << "攻撃：a　毒攻撃：s　防御：d　回復：f" << endl;
 	while (Input(2));
 	cout << endl;
+
 	if (cmd == "a")
 	{
-		peach.Attack(demon);
+		cout << "桃の攻撃！" << endl;
+		cout << "鬼は" << peach.Attack(demon) << "のダメージを受けた。" << '\n\n';
 	}
 	else if (cmd == "s")
 	{
-		peach.PoisonAtk(demon);
+		cout << "桃は毒針を放った！" << endl;
+		cout << "鬼は" << peach.PoisonAtk(demon) << "のダメージを受け、毒状態になった。" << '\n\n';
 	}
 	else if (cmd == "d")
 	{
 		peach.Defend();
+		cout << "桃は身を守っている。" << '\n\n';
 	}
 	else
 	{
-		peach.Recover();
+		cout << "桃は光合成を行った！" << endl;
+		cout << "桃は" << peach.Recover() << "だけ回復した。" << '\n\n';
 	}
-	lose = peach.StateCheck();
+
+	win = demon.CheckDead();
 }
 
 void Game::DemonTurn()
 {
-	if (lose)
+	if (win) return;
+
+	if (demon.RemovePoisoned())
 	{
-		return;
+		if (!demon.CheckDead())
+		{
+			cout << "（鬼の毒状態が解除された。）" << '\n\n';
+		}
 	}
-	else if (turn % 4 < 2)
+
+	win = demon.CheckDead();
+	if (win) return;
+
+	if (demon.RemoveDefend())
 	{
-		demon.Attack(peach);
+		cout << "（鬼の防御が解除された。）" << '\n\n';
+	}
+
+	if (demon.CheckAngered())
+	{
+		cout << "鬼は怒り状態になった！" << '\n\n';
+	}
+
+	if (turn % 4 == 1 || 
+		turn % 4 == 3 && demon.IsAngered())
+	{
+		cout << "鬼の攻撃！" << endl;
+		cout << "桃は" << demon.Attack(peach) << "のダメージを受けた。" << '\n\n';
 	}
 	else if (turn % 4 == 2)
 	{
-		demon.HeavyAtk(peach);
+		cout << "鬼は強い一撃を放った！" << endl;
+		cout << "桃は" << demon.HeavyAtk(peach) << "のダメージを受けた。" << '\n\n';
+	}
+	else if (turn % 4 == 3)
+	{
+		cout << "鬼は挑発している。" << '\n\n';
 	}
 	else
 	{
-		demon.Provoke();
+		demon.Defend();
+		cout << "鬼は身を守っている。" << '\n\n';
 	}
-	win = demon.StateCheck();
+
+	lose = peach.CheckDead();
 }
 
 void Game::Shutdown()
@@ -106,10 +147,10 @@ void Game::Shutdown()
 	}
 }
 
-bool Game::Input(int p)
+bool Game::Input(int pattern)
 {
 	cin >> cmd;
-	switch (p)
+	switch (pattern)
 	{
 	case 1:
 		if (cmd == "f") return false;

@@ -6,12 +6,17 @@ class Peach : public Character
 {
 public:
 	void Setter(int hp, int ap);
-	void Attack(Demon& demon);
-	void PoisonAtk(Demon& demon);
+	bool IsDefend();
+
+	int Attack(Demon& demon);
+	int PoisonAtk(Demon& demon);
 	void Defend();
-	void Recover();
-	bool StateCheck();
+	int Recover();
+	bool CheckDead();
+	bool RemoveDefend();
+
+	void Damaged(int point);
 private:
-	const unsigned int isDeath = (1 << 0);
+	const unsigned int isDead = (1 << 0);
 	const unsigned int isDefend = (1 << 1);
 };

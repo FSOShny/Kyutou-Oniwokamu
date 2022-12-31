@@ -14,7 +14,7 @@ public:
 private:
 	void PeachTurn();
 	void DemonTurn();
-	bool Input(int p);
+	bool Input(int pattern);
 
 	string cmd;
 	bool win;
