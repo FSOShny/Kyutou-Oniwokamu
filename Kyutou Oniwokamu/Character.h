@@ -4,10 +4,8 @@ class Character
 {
 public:
 	Character();
+	virtual void Setter(int hp, int ap) = 0;
 protected:
 	int hp;
-	int maxHp;
 	int ap;
-	int ret;
-	unsigned int state;
 };

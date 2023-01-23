@@ -4,18 +4,20 @@ Game::Game()
 	: cmd("")
 	, win(false)
 	, lose(false)
-	, turn(0)
+	, turn(1)
 {
 }
 
 void Game::Startup()
 {
+	// テキスト1
 	cout << "難易度を選択してください。" << endl;
 	cout << "弱：a　中：s　強：d" << endl;
 	while (Input(0));
 	cout << endl;
-	peach.Setter(500, 50);
 
+	// 桃のパラメータと鬼のパラメータを設定する
+	peach.Setter(500, 50);
 	if (cmd == "a")
 	{
 		demon.Setter(300, 30);
@@ -29,118 +31,116 @@ void Game::Startup()
 		demon.Setter(999, 99);
 	}
 
+	// テキスト2
 	cout << "鬼が現れた！！" << "\n\n";
 }
 
 void Game::Playing()
 {
+	// 勝負が決まるまでループを繰り返す
 	while (!(win || lose))
 	{
-		turn++;
 		PeachTurn();
 		DemonTurn();
+		turn++;
 	}
 }
 
 void Game::PeachTurn()
 {
-	if (peach.RemoveDefend())
-	{
-		cout << "（桃の防御が解除された。）" << '\n\n';
-	}
-
+	// テキスト3
 	cout << "桃は何をしますか？" << endl;
 	cout << "攻撃：a　毒攻撃：s　防御：d　回復：f" << endl;
 	while (Input(2));
 	cout << endl;
 
+	// 入力に応じて以下のアクションを行う
+
+	/* 攻撃 */
 	if (cmd == "a")
 	{
 		cout << "桃の攻撃！" << endl;
-		cout << "鬼は" << peach.Attack(demon) << "のダメージを受けた。" << '\n\n';
+		peach.Attack();
+		cout << "鬼は" << "（null）" << "のダメージを受けた。" << '\n\n';
 	}
+
+	/* 毒攻撃 */
 	else if (cmd == "s")
 	{
 		cout << "桃は毒針を放った！" << endl;
-		cout << "鬼は" << peach.PoisonAtk(demon) << "のダメージを受け、毒状態になった。" << '\n\n';
+		peach.PoisonAtk();
+		cout << "鬼は" << "（null）" << "のダメージを受け、毒状態になった。" << '\n\n';
 	}
+
+	/* 防御 */
 	else if (cmd == "d")
 	{
+		cout << "桃は防御の構えをとった。" << '\n\n';
 		peach.Defend();
-		cout << "桃は身を守っている。" << '\n\n';
 	}
+
+	/* 回復 */
 	else
 	{
 		cout << "桃は光合成を行った！" << endl;
-		cout << "桃は" << peach.Recover() << "だけ回復した。" << '\n\n';
+		peach.Recover();
+		cout << "桃は" << "（null）" << "だけ回復した。" << '\n\n';
 	}
-
-	win = demon.CheckDead();
 }
 
 void Game::DemonTurn()
 {
-	if (win) return;
+	// 現在のターン数に応じて以下のアクションを行う
 
-	if (demon.RemovePoisoned())
-	{
-		if (!demon.CheckDead())
-		{
-			cout << "（鬼の毒状態が解除された。）" << '\n\n';
-		}
-	}
-
-	win = demon.CheckDead();
-	if (win) return;
-
-	if (demon.RemoveDefend())
-	{
-		cout << "（鬼の防御が解除された。）" << '\n\n';
-	}
-
-	if (demon.CheckAngered())
-	{
-		cout << "鬼は怒り状態になった！" << '\n\n';
-	}
-
-	if (turn % 4 == 1 || 
-		turn % 4 == 3 && demon.IsAngered())
+	/* 攻撃 */
+	if (turn % 4 == 1)
 	{
 		cout << "鬼の攻撃！" << endl;
-		cout << "桃は" << demon.Attack(peach) << "のダメージを受けた。" << '\n\n';
+		demon.Attack();
+		cout << "桃は" << "（null）" << "のダメージを受けた。" << '\n\n';
 	}
+
+	/* 強攻撃 */
 	else if (turn % 4 == 2)
 	{
 		cout << "鬼は強い一撃を放った！" << endl;
-		cout << "桃は" << demon.HeavyAtk(peach) << "のダメージを受けた。" << '\n\n';
+		demon.HeavyAtk();
+		cout << "桃は" << "（null）" << "のダメージを受けた。" << '\n\n';
 	}
+
+	/* 挑発 */
 	else if (turn % 4 == 3)
 	{
 		cout << "鬼は挑発している。" << '\n\n';
 	}
+
+	/* 防御 */
 	else
 	{
+		cout << "鬼は防御の構えをとった。" << '\n\n';
 		demon.Defend();
-		cout << "鬼は身を守っている。" << '\n\n';
 	}
-
-	lose = peach.CheckDead();
 }
 
 void Game::Shutdown()
 {
+	// 勝負結果に応じたテキストを出力する
+
+	/* 桃の勝ちとなった場合 */
 	if (win)
 	{
 		cout << "鬼の体力がゼロになった。" << endl;
-		cout << "桃の勝利!!!" << endl;
+		cout << "桃の勝ち!!!" << endl;
 		while (Input(1));
 		cout << endl;
 		cout << "Thank you for playing!" << endl;
 	}
+
+	/* 桃の負けとなった場合 */
 	else
 	{
 		cout << "桃の体力がゼロになった。" << endl;
-		cout << "桃の敗北..." << endl;
+		cout << "桃の負け..." << endl;
 		while (Input(1));
 		cout << endl;
 		cout << "May you win someday." << endl;
@@ -149,6 +149,16 @@ void Game::Shutdown()
 
 bool Game::Input(int pattern)
 {
+	/* 
+
+	以下のコマンドを入力するまでループを繰り返す
+
+	パターン0の場合：a, s, d
+	パターン1の場合：f
+	パターン2の場合：a, s, d, f
+	
+	*/
+
 	cin >> cmd;
 	switch (pattern)
 	{
@@ -162,6 +172,8 @@ bool Game::Input(int pattern)
 		if (cmd == "a" || cmd == "s" || cmd == "d") return false;
 		break;
 	}
+
+	// 警告テキストを出力する
 	cout << "（正しいコマンドを入力してください。）" << endl;
 	return true;
 }
