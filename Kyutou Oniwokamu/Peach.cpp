@@ -1,5 +1,10 @@
 #include "Peach.h"
 
+Peach::Peach()
+	: frightenedTurn(0)
+{
+}
+
 void Peach::Setter(int hp, int ap)
 {
 	this->hp = hp;
@@ -7,56 +12,18 @@ void Peach::Setter(int hp, int ap)
 	this->ap = ap;
 }
 
-bool Peach::IsDefend()
+int Peach::Damaged(int damage)
 {
-	return (state & isDefend);
-}
-
-int Peach::Attack(Demon& demon)
-{
-	ret = ap;
-
-	if (demon.IsDefend())
+	hp -= damage;
+	if (hp <= 0)
 	{
-		ret /= 3;
+		state |= isDead;
 	}
-
-	demon.Damaged(ret);
-	return ret;
-}
-
-int Peach::PoisonAtk(Demon& demon)
-{
-	ret = ap / 2;
-
-	if (demon.IsDefend())
+	else if (hp > maxHp)
 	{
-		ret /= 3;
-	}
-
-	demon.Damaged(ret);
-	demon.Poisoned();
-	return ret;
-}
-
-void Peach::Defend()
-{
-	state |= isDefend;
-}
-
-int Peach::Recover()
-{
-	ret = 30;
-	hp += ret;
-
-	if (maxHp < hp)
-	{
-		ret -= (hp - maxHp);
 		hp = maxHp;
-		return ret;
 	}
-
-	return ret;
+	return damage;
 }
 
 bool Peach::CheckDead()
@@ -64,23 +31,62 @@ bool Peach::CheckDead()
 	return (state & isDead);
 }
 
-bool Peach::RemoveDefend()
+int Peach::Attack()
+{
+	return ap;
+}
+
+int Peach::PoisonAtk()
+{
+	return (ap * 0.5);
+}
+
+void Peach::Defend()
+{
+	state |= isDefend;
+}
+
+bool Peach::CheckDefend()
 {
 	if (state & isDefend)
 	{
 		state &= ~isDefend;
 		return true;
 	}
-
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
-void Peach::Damaged(int point)
+int Peach::Recover()
 {
-	hp -= point;
+	return -ap;
+}
 
-	if (hp <= 0)
+void Peach::Frightened()
+{
+	state |= isFrightened;
+	ap *= 0.5;
+	frightenedTurn = 2;
+}
+
+bool Peach::CheckFrightened()
+{
+	return (state & isFrightened);
+}
+
+bool Peach::RemoveFrightened()
+{
+	if (state & isFrightened)
 	{
-		state |= isDead;
+		frightenedTurn--;
+		if (frightenedTurn == 0)
+		{
+			state &= ~isFrightened;
+			ap *= 2;
+			return true;
+		}
 	}
+	return false;
 }

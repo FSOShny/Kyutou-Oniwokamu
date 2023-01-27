@@ -1,5 +1,10 @@
 #include "Demon.h"
 
+Demon::Demon()
+	: poisonedTurn(0)
+{
+}
+
 void Demon::Setter(int hp, int ap)
 {
 	this->hp = hp;
@@ -7,49 +12,14 @@ void Demon::Setter(int hp, int ap)
 	this->ap = ap;
 }
 
-bool Demon::IsDefend()
+int Demon::Damaged(int damage)
 {
-	return (state & isDefend);
-}
-
-bool Demon::IsAngered()
-{
-	return (state & isAngered);
-}
-
-int Demon::Attack(Peach& peach)
-{
-	ret = ap;
-	if (state & isAngered)
+	hp -= damage;
+	if (hp <= 0)
 	{
-		ret *= 2;
+		state |= isDead;
 	}
-	if (peach.IsDefend())
-	{
-		ret /= 3;
-	}
-	peach.Damaged(ret);
-	return ret;
-}
-
-int Demon::HeavyAtk(Peach& peach)
-{
-	ret = ap * 2;
-	if (state & isAngered)
-	{
-		ret *= 2;
-	}
-	if (peach.IsDefend())
-	{
-		ret /= 3;
-	}
-	peach.Damaged(ret);
-	return ret;
-}
-
-void Demon::Defend()
-{
-	state |= isDefend;
+	return damage;
 }
 
 bool Demon::CheckDead()
@@ -57,56 +27,55 @@ bool Demon::CheckDead()
 	return (state & isDead);
 }
 
-bool Demon::CheckAngered()
+int Demon::Attack()
 {
-	if (hp <= (maxHp * 0.7) && !(state & isAngered))
-	{
-		state |= isAngered;
-		return true;
-	}
-
-	return false;
+	return ap;
 }
 
-bool Demon::RemoveDefend()
+int Demon::HeavyAtk()
 {
-	if (state & isDefend)
-	{
-		state &= ~isDefend;
-		return true;
-	}
-
-	return false;
+	return ap * 2;
 }
 
-bool Demon::RemovePoisoned()
+bool Demon::CheckEnraged()
 {
-	if (state & isPoisoned)
+	if (!(state & isEnraged))
 	{
-		Damaged(20);
-		turnPois++;
-		if (turnPois == 3)
+		if (hp <= maxHp * 0.65)
 		{
-			state &= ~isPoisoned;
-			turnPois = 0;
+			state |= isEnraged;
+			ap *= 2;
 			return true;
 		}
 	}
-
-	return false;
-}
-
-void Demon::Damaged(int point)
-{
-	hp -= point;
-
-	if (hp <= 0)
+	else
 	{
-		state |= isDead;
+		return false;
 	}
 }
 
 void Demon::Poisoned()
 {
 	state |= isPoisoned;
+	poisonedTurn = 3;
+}
+
+bool Demon::CheckPoisoned()
+{
+	return (state & isPoisoned);
+}
+
+bool Demon::RemovePoisoned()
+{
+	if (state & isPoisoned)
+	{
+		poisonedTurn--;
+		Damaged(1);
+		if (poisonedTurn == 0)
+		{
+			state &= ~isPoisoned;
+			return true;
+		}
+	}
+	return false;
 }

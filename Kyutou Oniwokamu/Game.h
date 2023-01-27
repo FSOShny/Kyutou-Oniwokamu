@@ -20,6 +20,7 @@ private:
 	bool win;
 	bool lose;
 	int turn;
+	int damage;
 	Peach peach;
 	Demon demon;
 };
