@@ -1,11 +1,10 @@
 # Kyutou-Oniwokamu
 
-![A-s-A_G_V_thumbnail](https://user-images.githubusercontent.com/113690929/208066992-5c552630-02b9-41c3-8004-cb7b61541c3a.png)
+![K-O_thumbnail](https://user-images.githubusercontent.com/113690929/216645040-2a0c1de6-02ee-4088-91de-7aca9463d3bb.png)
 
 * C++の標準出力のみでプレイヤーとエネミーの決闘を表現するといったコンセプトで作った<br>
 「パソコンだけで遊べるゲームのようなコンソールアプリ」です。<br>
 （レベルデザインはまだ考慮できていないです。）
-
 <br />
 
 ## Demo
@@ -15,7 +14,7 @@
 
 ## Startup
 
-* 「Releases」にある「アプリケーションファイル（v1.1）」からプレイできます。
+* 「Releases」にある「アプリケーション（v1.1）」からプレイできます。
 
 <br />
 
