@@ -13,6 +13,12 @@ void Peach::Setter(int hp, int ap)
 	this->ap = ap;
 }
 
+int Peach::Attack(double rate)
+{
+	// （現在の攻撃力×アクション倍率）の値を返す
+	return (ap * rate);
+}
+
 int Peach::Damaged(int damage)
 {
 	// 現在の体力を減らす
@@ -28,7 +34,7 @@ int Peach::Damaged(int damage)
 
 	// 現在の体力がゼロであるときに
 	// 桃を戦闘不能にする
-	// （回復により体力の最大値を超えることはない）
+	// （なお、回復により体力の最大値を超えることはない）
 	if (hp <= 0)
 	{
 		state |= isDead;
@@ -53,28 +59,10 @@ bool Peach::CheckDead()
 	return (state & isDead);
 }
 
-int Peach::Attack()
-{
-	// 現在の攻撃力×1の値を返す
-	return ap;
-}
-
-int Peach::PoisonAtk()
-{
-	// 現在の攻撃力×0.5の値を返す
-	return (ap * 0.5);
-}
-
 void Peach::Defend()
 {
 	// 桃をそのターンだけ防御状態にする
 	state |= isDefend;
-}
-
-int Peach::Recover()
-{
-	// 現在の攻撃力×(-1)の値を返す
-	return -ap;
 }
 
 bool Peach::CheckDefend()
@@ -93,9 +81,9 @@ bool Peach::CheckDefend()
 
 void Peach::Frightened()
 {
-	// 桃を2ターンの間だけ恐怖状態にする
+	// 桃を2ターン分だけ恐怖状態にする
 	state |= isFrightened;
-	frightenedTurn = 3;
+	frightenedTurn = 2;
 
 	// 攻撃力を半分にする
 	ap *= 0.5;
@@ -110,9 +98,6 @@ bool Peach::RemoveFrightened()
 {
 	if (state & isFrightened)
 	{
-		// 恐怖状態の残りターン数を減らす
-		frightenedTurn--;
-
 		// 恐怖状態の残りターン数がゼロであるときに
 		// 桃の恐怖状態を消す
 		// （攻撃力を元に戻す）
@@ -122,6 +107,9 @@ bool Peach::RemoveFrightened()
 			ap *= 2;
 			return true;
 		}
+
+		// 恐怖状態の残りターン数を減らす
+		frightenedTurn--;
 	}
 	return false;
 }

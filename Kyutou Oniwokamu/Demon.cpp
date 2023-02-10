@@ -13,6 +13,12 @@ void Demon::Setter(int hp, int ap)
 	this->ap = ap;
 }
 
+int Demon::Attack(double rate)
+{
+	// （現在の攻撃力×アクション倍率）の値を返す
+	return (ap * rate);
+}
+
 int Demon::Damaged(int damage)
 {
 	// 現在の体力を減らす
@@ -33,18 +39,6 @@ bool Demon::CheckDead()
 	return (state & isDead);
 }
 
-int Demon::Attack()
-{
-	// 現在の攻撃力×1の値を返す
-	return ap;
-}
-
-int Demon::HeavyAtk()
-{
-	// 現在の攻撃力×2の値を返す
-	return ap * 2;
-}
-
 bool Demon::CheckEnraged()
 {
 	if (state & isEnraged)
@@ -53,13 +47,13 @@ bool Demon::CheckEnraged()
 	}
 	else
 	{
-		// 現在の体力が最大値の6.5以下であるときに
+		// 現在の体力が最大値の65%以下であるときに
 		// 鬼を激怒状態にする
 		// （激怒状態時は攻撃力を倍にする）
 		if (hp <= maxHp * 0.65)
 		{
 			state |= isEnraged;
-			ap *= 2;
+			ap *= 1.5;
 			return true;
 		}
 	}
@@ -68,7 +62,7 @@ bool Demon::CheckEnraged()
 
 void Demon::Poisoned()
 {
-	// 鬼を3ターンの間だけ毒状態にする
+	// 鬼を3ターン分だけ毒状態にする
 	state |= isPoisoned;
 	poisonedTurn = 3;
 }
@@ -84,9 +78,6 @@ bool Demon::RemovePoisoned()
 	{
 		// 毒状態の残りターン数を減らす
 		poisonedTurn--;
-
-		// 鬼は20ダメージを受ける（専用テキストは出力しない）
-		Damaged(20);
 
 		// 毒状態の残りターン数がゼロであるときに
 		// 鬼の毒状態を消す
