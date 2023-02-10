@@ -1,6 +1,6 @@
 # Kyutou-Oniwokamu
 
-![K-O_thumbnail](https://user-images.githubusercontent.com/113690929/216645040-2a0c1de6-02ee-4088-91de-7aca9463d3bb.png)
+![K-O_thumbnail](https://user-images.githubusercontent.com/113690929/218118594-dad8b2a9-d01a-4102-83fc-526fa9dd1c85.png)
 
 * C++の標準出力のみでプレイヤーとエネミーの決闘を表現するといったコンセプトで制作した<br>
 「パソコンだけで遊べるゲームのようなコンソールアプリ」です。<br>
@@ -14,7 +14,6 @@
 ## Startup
 
 * 「Releases」にある「アプリケーション（v1.2）」からプレイできます。
-
 <br />
 
 ## Operation
@@ -53,5 +52,9 @@
 
 ## Update
 
-* なし
+* 2023/02/04（v1.1）<br>
+　コンソールアプリのリリース
+
+* 2023/02/10（v1.2）<br>
+　出力テキストの一部改変、キャラクターパラメーター等のバランス調整
 <br />
