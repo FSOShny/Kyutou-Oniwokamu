@@ -124,6 +124,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)Kyutou-Oniwokamu$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)Kyutou-Oniwokamu.pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
