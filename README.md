@@ -34,7 +34,7 @@
 
 * 本作品の制作には、下記のソフトウェア及び素材を使用させていただきました。
 
-  * 「Visual Studio 2022」（C#コーディング）<br>
+  * 「Visual Studio 2022」（C++コーディング）<br>
   　関連ホームページ：https://visualstudio.microsoft.com/ja/
 <br />
 
