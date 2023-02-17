@@ -5,20 +5,6 @@ Demon::Demon()
 {
 }
 
-void Demon::Setter(int hp, int ap)
-{
-	// 鬼のパラメータを設定する
-	this->hp = hp;
-	maxHp = hp;
-	this->ap = ap;
-}
-
-int Demon::Attack(double rate)
-{
-	// （現在の攻撃力×アクション倍率）の値を返す
-	return (ap * rate);
-}
-
 int Demon::Damaged(int damage)
 {
 	// 現在の体力を減らす
@@ -34,13 +20,10 @@ int Demon::Damaged(int damage)
 	return damage;
 }
 
-bool Demon::CheckDead()
-{
-	return (state & isDead);
-}
-
 bool Demon::CheckEnraged()
 {
+	/* 鬼が激怒状態かどうかを確認する */
+
 	if (state & isEnraged)
 	{
 		return true;
@@ -69,6 +52,7 @@ void Demon::Poisoned()
 
 bool Demon::CheckPoisoned()
 {
+	// 鬼が毒状態かどうかのフラグを返す
 	return (state & isPoisoned);
 }
 

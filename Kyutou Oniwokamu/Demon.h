@@ -7,19 +7,15 @@ public:
 	// 鬼クラスのコンストラクタ
 	Demon();
 
-	// （キャラクタークラスメソッドのオーバーライド）
-	void Setter(int hp, int ap) override;
-	int Attack(double rate) override;
+	// 鬼がダメージを受けたときのメソッド
 	int Damaged(int damage) override;
-	bool CheckDead() override;
-
-	// 鬼が激怒状態かどうかを確認する処理
+	// 鬼が激怒状態かどうかを確認するメソッド
 	bool CheckEnraged();
-	// 鬼が毒状態になるときの処理
+	// 鬼が毒状態になるときのメソッド
 	void Poisoned();
-	// 鬼が毒状態かどうかを確認する処理
+	// 鬼が毒状態かどうかを確認するメソッド
 	bool CheckPoisoned();
-	// 鬼の毒状態が消えたかどうかを確認する処理
+	// 鬼の毒状態が消えたかどうかを確認するメソッド
 	bool RemovePoisoned();
 private:
 	// 鬼の激怒状態を表すフラグ定数
