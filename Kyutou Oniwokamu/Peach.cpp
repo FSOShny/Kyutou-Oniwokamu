@@ -5,20 +5,6 @@ Peach::Peach()
 {
 }
 
-void Peach::Setter(int hp, int ap)
-{
-	// 桃のパラメータを設定する
-	this->hp = hp;
-	maxHp = hp;
-	this->ap = ap;
-}
-
-int Peach::Attack(double rate)
-{
-	// （現在の攻撃力×アクション倍率）の値を返す
-	return (ap * rate);
-}
-
 int Peach::Damaged(int damage)
 {
 	// 現在の体力を減らす
@@ -54,11 +40,6 @@ int Peach::Damaged(int damage)
 	}
 }
 
-bool Peach::CheckDead()
-{
-	return (state & isDead);
-}
-
 void Peach::Defend()
 {
 	// 桃をそのターンだけ防御状態にする
@@ -67,7 +48,8 @@ void Peach::Defend()
 
 bool Peach::CheckDefend()
 {
-	// 桃の防御状態を消す
+	// 桃が防御状態であれば
+	// それを消す
 	if (state & isDefend)
 	{
 		state &= ~isDefend;
@@ -91,6 +73,7 @@ void Peach::Frightened()
 
 bool Peach::CheckFrightened()
 {
+	// 桃が恐怖状態かどうかのフラグを返す
 	return (state & isFrightened);
 }
 

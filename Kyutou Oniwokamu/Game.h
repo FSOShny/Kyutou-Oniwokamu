@@ -9,18 +9,22 @@ class Game
 public:
 	// ゲームクラスのコンストラクタ
 	Game();
-	// ゲームを開始するときの処理
+	// ゲームを開始するときのメソッド
 	void Startup();
-	// ゲームをプレイしているときの処理
-	void Playing();
-	// ゲームを終了するときの処理
+	// ゲームをプレイしているときのメソッド
+	bool Playing();
+	// ゲームを終了するときのメソッド
 	void Shutdown();
 private:
-	// 桃のターンであるときの処理
-	void PeachTurn();
-	// 鬼のターンであるときの処理
-	void DemonTurn();
-	// コマンドを入力するときの処理
+	// 桃と鬼の決闘前のメソッド
+	void DuelBefore(Peach& peach, Demon& demon);
+	// 桃のターンであるときのメソッド
+	void PeachTurn(Peach& peach, Demon& demon);
+	// 鬼のターンであるときのメソッド
+	void DemonTurn(Peach& peach, Demon& demon);
+	// 桃と鬼の決闘後のメソッド
+	bool DuelAfter();
+	// コマンドを入力するときのメソッド
 	bool Input(char pattern);
 
 	// 入力コマンド
@@ -36,8 +40,4 @@ private:
 	int enragedTurn;
 	// 与えたダメージ量（または回復量）
 	int damage;
-	// 桃クラス
-	Peach peach;
-	// 鬼クラス
-	Demon demon;
 };

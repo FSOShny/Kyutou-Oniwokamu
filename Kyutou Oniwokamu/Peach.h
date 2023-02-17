@@ -7,21 +7,17 @@ public:
 	// 桃クラスのコンストラクタ
 	Peach();
 
-	// （キャラクタークラスメソッドのオーバーライド）
-	void Setter(int hp, int ap) override;
-	int Attack(double rate) override;
+	// 桃がダメージを受けたときのメソッド
 	int Damaged(int damage) override;
-	bool CheckDead() override;
-
-	// 桃が防御を行うときの処理
+	// 桃が防御を行うときのメソッド
 	void Defend();
-	// 桃が防御状態かどうかを確認する処理
+	// 桃が防御状態かどうかを確認するメソッド
 	bool CheckDefend();
-	// 桃が恐怖状態になるときの処理
+	// 桃が恐怖状態になるときのメソッド
 	void Frightened();
-	// 桃が恐怖状態かどうかを確認する処理
+	// 桃が恐怖状態かどうかを確認するメソッド
 	bool CheckFrightened();
-	// 鬼の毒状態が消えたかどうかを確認する処理
+	// 鬼の毒状態が消えたかどうかを確認するメソッド
 	bool RemoveFrightened();
 private:
 	// 桃の防御状態を表すフラグ定数

@@ -14,7 +14,7 @@ int main()
 	Game game;
 
 	game.Startup();
-	game.Playing();
+	while (game.Playing());
 	game.Shutdown();
 
 	return 0;
