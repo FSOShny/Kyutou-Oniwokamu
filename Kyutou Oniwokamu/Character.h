@@ -5,6 +5,7 @@ class Character
 public:
 	// キャラクター（桃, 鬼）クラスのコンストラクタ
 	Character();
+
 	// キャラクターのパラメータを設定するときのメソッド
 	void Setter(int hp, int ap);
 	// キャラクターがダメージを与えるときのメソッド
