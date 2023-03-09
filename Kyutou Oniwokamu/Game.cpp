@@ -13,8 +13,7 @@ Game::Game()
 void Game::Startup()
 {
 	// 開始テキスト
-	cout << "＜ゲームを開始します。＞" << endl;
-	cout << "～次へ進む：f（または）e～" << "\n ▼ ";
+	cout << "（ゲームを開始するには、[f]か[e]を入力してください。）" << "\n ▼ ";
 	while (Input('B'));
 	cout << endl;
 }
@@ -32,7 +31,7 @@ bool Game::Playing()
 	while (!(win || lose))
 	{
 		// 通常テキスト2
-		cout << "--------------- " << turn << "ターン ---------------" << "\n\n";
+		cout << "-------------------- " << turn << "ターン --------------------" << "\n\n";
 
 		// 桃のターン
 		PeachTurn(peach, demon);
@@ -54,8 +53,7 @@ bool Game::Playing()
 void Game::Shutdown()
 {
 	// 終了テキスト
-	cout << "＜ゲームを終了します。＞" << endl;
-	cout << "～次へ進む：f（または）e～" << "\n ▼ ";
+	cout << "（ゲームを終了するには、[f]か[e]を入力してください。）" << "\n ▼ ";
 	while (Input('B'));
 	cout << endl;
 }
@@ -64,8 +62,8 @@ void Game::DuelBefore(Peach& peach, Demon& demon)
 {
 	// 選択肢テキスト1
 	// （ここで桃と鬼のパラメータを決定する）
-	cout << "＜難易度を選択してください。＞" << endl;
-	cout << "～弱：a　中：s　強：d～" << "\n ▼ ";
+	cout << "難易度を選択してください。" << endl;
+	cout << "（弱：[a]　中：[s]　強：[d]）" << "\n ▼ ";
 	while (Input('C'));
 	cout << endl;
 	if (cmd == "a")
@@ -92,26 +90,29 @@ void Game::DuelBefore(Peach& peach, Demon& demon)
 
 	// 通常テキスト1
 	cout << "鬼が現れた！！" << "\n\n";
+	cout << "（シナリオを進めるには、[f]か[e]を入力してください。）" << "\n ▼ ";
+	while (Input('B'));
+	cout << endl;
 
 	// 装飾テキスト1
-	cout << "*********************************************" << "\n\n";
+	cout << "**************************************************" << "\n\n";
 }
 
 void Game::PeachTurn(Peach& peach, Demon& demon)
 {
 	// 選択肢テキスト2
 	// （ここで桃のアクションを決定する）
-	cout << "＜桃は何をしますか？＞" << endl;
-	cout << "～攻撃：a　毒攻撃：s　防御：d　回復：f～" << "\n ▼ ";
+	cout << "桃は何をしますか？" << endl;
+	cout << "（攻撃：[a]　毒攻撃：[s]　防御：[d]　回復：[f]）" << "\n ▼ ";
 	while (Input('A'));
 	cout << endl;
 
 	// 入力コマンドに応じて桃はアクションを行う
 	/*
-		入力コマンド「a」のとき：攻撃
-		入力コマンド「s」のとき：毒攻撃
-		入力コマンド「d」のとき：防御
-		入力コマンド「f」のとき：回復
+		入力コマンド[a]のとき：攻撃
+		入力コマンド[s]のとき：毒攻撃
+		入力コマンド[d]のとき：防御
+		入力コマンド[f]のとき：回復
 	*/
 	if (cmd == "a")
 	{
@@ -153,7 +154,7 @@ void Game::PeachTurn(Peach& peach, Demon& demon)
 	{
 		/* 自分を防御状態にする */
 
-		cout << "● 桃は防御の構えをとった。" << "\n\n";
+		cout << "● 桃は防御の構えをとった！" << "\n\n";
 		peach.Defend();
 	}
 	else
@@ -190,12 +191,12 @@ void Game::PeachTurn(Peach& peach, Demon& demon)
 		if (enragedTurn == 0)
 		{
 			cout << "　鬼は激怒状態になった！" << "\n\n";
-			cout << "（鬼の攻撃力が倍になった。気を付けろ！）" << "\n\n";
+			cout << "　鬼の攻撃力が倍になっている...気を付けろ！" << "\n\n";
 			enragedTurn = turn;
 		}
 		else
 		{
-			cout << "　鬼は激怒状態のままだ。" << "\n\n";
+			cout << "　鬼は激怒状態のままだ！" << "\n\n";
 			enragedTurn++;
 		}
 	}
@@ -241,7 +242,7 @@ void Game::DemonTurn(Peach& peach, Demon& demon)
 	{
 		/* 何も発生しない */
 
-		cout << "◆ 鬼は挑発している。" << "\n\n";
+		cout << "◆ 鬼は挑発しているが、何も起こらなかった。" << "\n\n";
 	}
 	else
 	{
@@ -253,12 +254,12 @@ void Game::DemonTurn(Peach& peach, Demon& demon)
 		if (!peach.CheckFrightened())
 		{
 			peach.Frightened();
-			cout << "　桃は恐怖状態になった。" << "\n\n";
-			cout << "（しばらくの間、桃の攻撃力が半分になってしまう。）" << "\n\n";
+			cout << "　桃は恐怖状態になった！" << "\n\n";
+			cout << "　しばらくの間、桃の攻撃力が半分になってしまう..." << "\n\n";
 		}
 		else
 		{
-			cout << "　桃はすでに恐怖状態だ。" << "\n\n";
+			cout << "　桃はすでに恐怖状態だ！" << "\n\n";
 		}
 	}
 
@@ -280,23 +281,23 @@ void Game::DemonTurn(Peach& peach, Demon& demon)
 bool Game::DuelAfter()
 {
 	// 装飾テキスト2
-	cout << "*********************************************" << "\n\n";
+	cout << "**************************************************" << "\n\n";
 
 	// 勝ち負けに応じた専用テキストを出力する
 	if (win)
 	{
-		cout << "鬼の体力がゼロになった。" << "\n\n";
+		cout << "鬼の体力がゼロになった！" << "\n\n";
 		cout << "桃の勝ち!!!" << "\n\n";
-		cout << "～次へ進む：f（または）e～" << "\n ▼ ";
+		cout << "（シナリオを進めるには、[f]か[e]を入力してください。）" << "\n ▼ ";
 		while (Input('B'));
 		cout << endl;
 		cout << "★★★ Thank you for playing! ★★★" << "\n\n";
 	}
 	else
 	{
-		cout << "桃の体力がゼロになった。" << "\n\n";
+		cout << "桃の体力がゼロになった！" << "\n\n";
 		cout << "桃の負け..." << "\n\n";
-		cout << "～次へ進む：f（または）e～" << "\n ▼ ";
+		cout << "（シナリオを進めるには、[f]か[e]を入力してください。）" << "\n ▼ ";
 		while (Input('B'));
 		cout << endl;
 		cout << "■■■ May you win someday. ■■■" << "\n\n";
@@ -304,8 +305,8 @@ bool Game::DuelAfter()
 
 	// 選択肢テキスト2
 	// （ここでゲームプレイをリトライするかどうかを決定する）
-	cout << "＜ゲームプレイをリトライしますか？＞" << endl;
-	cout << "～はい：f　いいえ：e～" << "\n ▼ ";
+	cout << "ゲームプレイをリトライしますか？" << endl;
+	cout << "（はい：[f]　いいえ：[e]）" << "\n ▼ ";
 	while (Input('B'));
 	cout << endl;
 	if (cmd == "f")
@@ -333,9 +334,9 @@ bool Game::Input(char pattern)
 		正しい入力コマンドは以下の通り
 		（正しく入力するまではループする）
 
-		パターン「A」のとき：a, s, d, f
-		パターン「B」のとき：f, e
-		パターン「C」のとき：a, s, d
+		パターン「A」のとき：[a], [s], [d], [f]
+		パターン「B」のとき：[f], [e]
+		パターン「C」のとき：[a], [s], [d]
 
 	*/
 	cin >> cmd;
@@ -353,6 +354,6 @@ bool Game::Input(char pattern)
 	}
 
 	// 警告テキスト
-	cout << "/*正しいコマンドを入力してください。*/" << "\n ▼ ";
+	cout << "（正しいコマンドを入力してください。）" << "\n ▼ ";
 	return true;
 }
